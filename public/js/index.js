@@ -1,5 +1,4 @@
 /*eslint-disable*/
-
 import '@babel/polyfill';
 import { displayMap } from './mapbox';
 import { login, logout } from './login';
@@ -36,7 +35,7 @@ if (userDataForm)
     const form = new FormData();
     form.append('data', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
-    form.append('photo', document.getElementById('ephoto').files[0]);
+    form.append('photo', document.getElementById('photo').files[0]);
     console.log(form);
 
     updateSettings(form, 'data');

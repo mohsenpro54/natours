@@ -1,5 +1,4 @@
 /* eslint-disable */
-console.log(locations);
 export const displayMap = (locations) => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoibW9oc2VuNTQiLCJhIjoiY2t0cHE4MWFlMGY3bTJ1bDM4dzE2dWttaSJ9.-tlXCY3Xbz5NNA9_O1pplg';
@@ -50,7 +49,7 @@ export const displayMap = (locations) => {
       top: 200,
       buttom: 150,
       left: 100,
-      right: 200,
+      right: 100,
     },
   });
 };
