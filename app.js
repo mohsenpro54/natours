@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+//const { bodyParser } = require('express');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
