@@ -68,10 +68,10 @@ exports.webhookCheckout = (req, res, next) => {
   } catch (err) {
     return res.status(400).send(`webhook error:${err.message}`);
   }
-  if (event.type === 'checkout.session.completed')
+  if (event.type === 'checkout.session.complete')
     createBookingCheckout(event.data.object);
 
-  res.status(200).json({ recived: true });
+  res.status(200).json({ received: true });
 };
 
 exports.createBooking = factory.createOne(Booking);
