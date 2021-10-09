@@ -35,6 +35,8 @@ app.set('views', path.join(__dirname, 'views'));
 //// serving static files
 //// impliment cors
 app.use(cors());
+app.options('*', cors());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 //// set security http headers
@@ -47,7 +49,7 @@ app.use(helmet());
 //   })
 // );
 
-app.options('*', cors());
+// app.options('*', cors());
 //app.options('/api/v1/tours/:id', cors());
 // app.use(helmet());
 //// 1) global middelware
