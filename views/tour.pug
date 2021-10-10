@@ -43,14 +43,14 @@ block content
           +overviewBox('next date', date, 'calendar')
           +overviewBox('Difficulty', tour.difficulty, 'trending-up')
           +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
-          +overviewBox('Rating', `${tour.ratingsAverage}/5 `, 'star')
+          +overviewBox('Rating', `${tour.ratingsAverage} / 5 `, 'star')
 
         .overview-box__group
           h2.heading-secondary.ma-bt-lg Your tour guides
 
           each guide in tour.guides
             .overview-box__detail
-              img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide. name}`)
+              img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
               - if (guide.role === 'lead-guide')
                 span.overview-box__label Lead guide
               - if (guide.role === 'guide')
