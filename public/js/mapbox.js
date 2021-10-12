@@ -5,7 +5,7 @@ export const displayMap = (locations) => {
 
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mohsen54/cktpsq7sj2jcl19ndknhgblk9',
+    style: 'mapbox://styles/mohsen54/ckump58hy532n18mrkxzf7zkk',
     scrollZoom: false,
   });
   const bounds = new mapboxgl.LngLatBounds();
