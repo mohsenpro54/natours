@@ -40,7 +40,7 @@ block content
 
           - const date = tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
 
-          +overviewBox('next date', date, 'calendar')
+          +overviewBox('Next date', date, 'calendar')
           +overviewBox('Difficulty', tour.difficulty, 'trending-up')
           +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
           +overviewBox('Rating', `${tour.ratingsAverage} / 5 `, 'star')
@@ -58,7 +58,7 @@ block content
               span.overview-box__text= guide.name
 
     .description-box
-      h2.heading-secondary.ma-bt-lg= `about ${tour.name} tour`
+      h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour`
       - const parapraphs = tour.description.split('\n');
       each p in parapraphs 
         p.description__text= p
