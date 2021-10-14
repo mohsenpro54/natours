@@ -6,9 +6,6 @@ process.on('uncaughtException', (err) => {
   console.log('UNCAUGHT RJECTION :boom: shutting down ...');
   console.log(err.name, err.message);
   process.exit(1);
-  //     server.close(()=> {
-
-  //     });
 });
 
 dotenv.config({ path: './config.env' });

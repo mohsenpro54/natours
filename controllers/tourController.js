@@ -7,6 +7,7 @@ const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
 
 const multerStorage = multer.memoryStorage();
+
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
@@ -65,6 +66,7 @@ exports.getTour = factory.getOne(Tour, { path: 'reviews' });
 exports.createTour = factory.createOne(Tour);
 exports.updateTour = factory.updateOne(Tour);
 exports.deleteTour = factory.deleteOne(Tour);
+
 exports.getTourStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
     {
@@ -174,7 +176,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
   const { latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');
 
-  const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
+  //const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
 
   if (!lat || !lng) {
     next(
@@ -184,7 +186,6 @@ exports.getDistances = catchAsync(async (req, res, next) => {
       )
     );
   }
-
   const distances = await Tour.aggregate([
     {
       $geoNear: {
@@ -193,7 +194,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
           coordinates: [lng * 1, lat * 1],
         },
         distanceField: 'distance',
-        distanceMultiplier: multiplier,
+        distanceMultiplier: 0.001,
       },
     },
     {
@@ -205,7 +206,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
   ]);
 
   res.status(200).json({
-    stats: 'success',
+    status: 'success',
     data: {
       data: distances,
     },

@@ -42,16 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //// set security http headers
 app.use(helmet());
 ////access-controll-allow-origin*
-////api.natours.com,front-end natours.com
-// app.use(
-//   cors({
-//     origin: 'https://www.natours.com',
-//   })
-// );
-
-// app.options('*', cors());
-//app.options('/api/v1/tours/:id', cors());
-// app.use(helmet());
 //// 1) global middelware
 
 if (process.env.NODE_ENV === 'development') {
