@@ -3,20 +3,20 @@
 const AppError = require('./../utils/appError');
 
 const handleCastErrorDB = (err) => {
-  const message = `invalid ${err.path}: ${err.value}.`;
+  const message = `Invalid ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
 const handleDuplicateFieldsDB = (err) => {
   const value = err.errmsg.match(/\d{4}-\d{2}(-\d{2})?/)[0];
   //const value = err.errmsg.match(/(["'])(\\?.)*\1/)[0];
-  console.log(value);
+  // console.log(value);
 
   const message = `Duplicate field value :${value} .please use another valus !`;
   return new AppError(message, 400);
 };
 const handlerValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
-  const message = `Invalide input data. ${errors.join('.')}`;
+  const message = `Invalide input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
 };
 const handleJWTError = () =>
@@ -61,7 +61,7 @@ const sendErrorProd = (err, req, res) => {
     });
   }
   if (err.isOperational) {
-    console.log(err);
+    // console.log(err);
     ///// operational, trusted : send message to the client
     return res.status(err.statusCode).render('error', {
       title: 'something went wrrong',
@@ -92,7 +92,7 @@ module.exports = (err, req, res, next) => {
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === 'ValidatorError')
+    if (error.name === 'ValidationrError')
       error = handlerValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();

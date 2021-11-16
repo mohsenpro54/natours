@@ -12,7 +12,7 @@ const tourSchema = new mongoose.Schema(
       trim: true,
       maxlength: [40, 'A tour name must be have less or equal 40 characters'],
       minlength: [10, 'A tour name must be have more or equal 10 characters'],
-      //validate : [validator.isAlpha, ' tour name must only contain characters']
+      // validate: [validator.isAlpha, ' tour name must only contain characters'],
     },
     slug: String,
     duration: {
@@ -78,7 +78,7 @@ const tourSchema = new mongoose.Schema(
     startDates: [Date],
     secretTour: {
       type: Boolean,
-      befault: false,
+      default: false,
     },
     startLocation: {
       ///// geoJSON
@@ -110,8 +110,6 @@ const tourSchema = new mongoose.Schema(
         ref: 'User',
       },
     ],
-
-    //select:false
   },
   {
     toJSON: { virtuals: true },
@@ -173,17 +171,16 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-tourSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds`);
-  //console.log(docs);
-  next();
-});
+// tourSchema.post(/^find/, function (docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds`);
+//   next();
+// });
 
 //////AGGRIGATION MIDDLEWARE
-// tourSchema.pre('aggregate',function(next) {
-//     this.pipeline().unshift({ $match: {secretTour:{$ne:true}}});
-//     console.log(this.pipeline());
-//     next();
+// tourSchema.pre('aggregate', function (next) {
+//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+//   console.log(this);
+//   next();
 // });
 
 const Tour = mongoose.model('Tour', tourSchema);

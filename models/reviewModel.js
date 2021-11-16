@@ -29,12 +29,12 @@ const reviewSchema = new mongoose.Schema(
       required: [true, 'review must belong a user!'],
     },
   },
-
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
+
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 reviewSchema.pre(/^find/, function (next) {

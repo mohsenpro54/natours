@@ -36,7 +36,6 @@ app.set('views', path.join(__dirname, 'views'));
 //// impliment cors
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-
 //// set security http headers
 app.use(helmet());
 ////access-controll-allow-origin*
@@ -97,7 +96,6 @@ app.use(compression());
 ///// testing middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.cookies);
   next();
 });
 //// 3) ROUTES
