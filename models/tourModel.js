@@ -138,20 +138,20 @@ tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-// tourSchema.pre('save', async function(next) {
-//    const guidesPromises =  this.guides.map(async id => await User.findById(id));
-//    this.guides= await Promise.all(guidesPromises);
+tourSchema.pre('save', async function (next) {
+  const guidesPromises = this.guides.map(async (id) => await User.findById(id));
+  this.guides = await Promise.all(guidesPromises);
 
-//     next();
-// });
+  next();
+});
 
-// tourSchema.pre('save', function(next) {
-//     console.log('will save document...');
-//     next();
+// tourSchema.pre('save', function (next) {
+//   console.log('will save document...');
+//   next();
 // });
-// tourSchema.post('save',function(doc, next) {
-//     console.log(doc);
-//     next();
+// tourSchema.post('save', function (doc, next) {
+//   console.log(doc);
+//   next();
 // });
 ///////////////GUERY MIIDDLEWARE
 tourSchema.pre(/^find/, function (next) {
@@ -162,26 +162,26 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-tourSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: 'guides',
-    select: '-__v-passwordCreatedAt',
-  });
+// tourSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'guides',
+//     select: '-__v-passwordCreatedAt',
+//   });
 
+//   next();
+// });
+
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(`Query took ${Date.now() - this.start} milliseconds`);
   next();
 });
 
-// tourSchema.post(/^find/, function (docs, next) {
-//   console.log(`Query took ${Date.now() - this.start} milliseconds`);
-//   next();
-// });
-
 //////AGGRIGATION MIDDLEWARE
-// tourSchema.pre('aggregate', function (next) {
-//   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
-//   console.log(this);
-//   next();
-// });
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  console.log(this.pipeline());
+  next();
+});
 
 const Tour = mongoose.model('Tour', tourSchema);
 

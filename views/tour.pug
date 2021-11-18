@@ -1,9 +1,9 @@
 extends base 
-include _reviewCard
+//- include _reviewCard
 
-block append head 
-  script(src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js')
-  link(href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' )
+//- block append head 
+//-   script(src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js')
+//-   link(href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' )
   
 mixin overviewBox(label, text, icon)
   .overview-box__detail
@@ -17,7 +17,7 @@ block content
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
-      img.header__hero-img(src=`/img/tours/${tour.imageCover}`, alt= `${tour.name}`)
+      img.header__hero-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
 
     .heading-box
       h1.heading-primary
@@ -40,7 +40,7 @@ block content
 
           - const date = tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
 
-          +overviewBox('next date', date, 'calendar')
+          +overviewBox('Next date', date, 'calendar')
           +overviewBox('Difficulty', tour.difficulty, 'trending-up')
           +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
           +overviewBox('Rating', `${tour.ratingsAverage}/5 `, 'star')
@@ -72,10 +72,10 @@ block content
   section.section-map
     #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
-  section.section-reviews
-    .reviews
-      each review in tour.reviews
-        +reviewCard(review)
+  //- section.section-reviews
+  //-   .reviews
+  //-     each review in tour.reviews
+  //-       +reviewCard(review)
 
   section.section-cta
     .cta

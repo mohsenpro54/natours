@@ -30,12 +30,47 @@ const app = express();
 app.enable('trust proxy');
 
 app.set('view engine', 'pug');
+
 app.set('views', path.join(__dirname, 'views'));
 ///// 1) GLOBAL MIDDLEWARE
 //// serving static files
 //// impliment cors
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.options('*', cors());
+//app.options('/api/v1/tours/:id', cors());
+// app.use(helmet());
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'too many request from this ip , please try again in an hour!',
+});
+
+app.use('/api', limiter);
+
+app.use(mongoSanitize());
+
+app.use(xss());
+
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price',
+    ],
+  })
+);
+
+app.use(express.static(path.join(`${__dirname}/public`)));
 //// set security http headers
 app.use(helmet());
 ////access-controll-allow-origin*
@@ -46,21 +81,13 @@ app.use(helmet());
 //   })
 // );
 
-app.options('*', cors());
-//app.options('/api/v1/tours/:id', cors());
-// app.use(helmet());
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 //// 1) global middelware
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 ///// limit requestes from same api
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: 'too many request from this ip , please try again in an hour!',
-});
-app.use('/api', limiter);
 
 app.post(
   '/webhook-checkout',
@@ -74,30 +101,14 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
 //// data sanitization against nosql query injection
-app.use(mongoSanitize());
 
 //// data sanitization against xss
-app.use(xss());
 
 ///// prevent parameter pollution
-app.use(
-  hpp({
-    whitelist: [
-      'duration',
-      'ratingsQuantity',
-      'ratingsAverage',
-      'maxGroupSize',
-      'difficulty',
-      'price',
-    ],
-  })
-);
+
 app.use(compression());
 ///// testing middleware
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
+
 //// 3) ROUTES
 
 app.use('/', viewRouter);
