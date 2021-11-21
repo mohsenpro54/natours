@@ -5,10 +5,6 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router({ mergeParams: true });
 
-/// POST(/tour/1234bh1/reviews)
-/// GET(/tour/1234bh1/reviews)
-/// POST ( /reviews )
-
 router.use(authController.protect);
 
 router

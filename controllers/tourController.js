@@ -161,7 +161,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
       )
     );
   }
-  //console.log(distance, lat, lng, unit );
+  console.log(distance, lat, lng, unit);
   const tours = await Tour.find({
     startLocation: {
       $geoWithin: {
@@ -171,7 +171,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({
-    stats: 'success',
+    status: 'success',
     results: tours.length,
     data: {
       data: tours,

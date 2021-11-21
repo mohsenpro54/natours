@@ -1,7 +1,7 @@
 /*eslint-disable*/
 const Review = require('./../models/reviewModel');
 const factory = require('./handlerFactory');
-const catchAsync = require('./../utils/catchAsync');
+// const catchAsync = require('./../utils/catchAsync');
 
 exports.setTourUserIds = (req, res, next) => {
   if (!req.body.tour) req.body.tour = req.params.tourId;

@@ -35,7 +35,7 @@ const sendErrorDev = (err, req, res) => {
     });
   }
   ///// b) RENDER WEBSITE
-  console.error('ERROR :', err);
+  console.error('ERROR', err);
   return res.status(err.statusCode).render('error', {
     title: 'something went wrrong',
     msg: err.message,
@@ -92,7 +92,7 @@ module.exports = (err, req, res, next) => {
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === 'ValidationrError')
+    if (error.name === 'ValidationError')
       error = handlerValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();

@@ -7,7 +7,7 @@ const reviewSchema = new mongoose.Schema(
   {
     review: {
       type: String,
-      resuired: [true, 'review can not be empty'],
+      required: [true, 'review can not be empty'],
     },
     rating: {
       type: Number,
@@ -53,52 +53,50 @@ reviewSchema.pre(/^find/, function (next) {
   next();
 });
 
-reviewSchema.statics.calcAvarageRatings = async function (tourId) {
+reviewSchema.statics.calcAverageRatings = async function (tourId) {
   // console.log(tourId);
-
   const stats = await this.aggregate([
     {
       $match: { tour: tourId },
     },
-
     {
-      group: {
+      $group: {
         _id: '$tour',
         nRating: { $sum: 1 },
         avgRating: { $avg: '$rating' },
       },
     },
   ]);
-  //console.log(stats);
+  // console.log(stats);
   if (stats.length > 0) {
     await Tour.findByIdAndUpdate(tourId, {
       ratingsQuantity: stats[0].nRating,
-      ratingsAvarage: stats[0].avgRating,
+      ratingsAverage: stats[0].avgRating,
     });
   } else {
     await Tour.findByIdAndUpdate(tourId, {
       ratingsQuantity: 0,
-      ratingsAvarage: 4.5,
+      ratingsAverage: 4.5,
     });
   }
 };
 
 reviewSchema.post('save', function () {
   //// this point to current review
-  this.constructor.calcAvarageRatings(this.tour);
+  this.constructor.calcAverageRatings(this.tour);
 });
 /// findByIdAndUpdate
 /// findByIdAndDelete
 reviewSchema.pre(/^findOneAnd/, async function (next) {
   this.r = await this.findOne();
-  //console.log(this.r);
+  // console.log(this.r);
   next();
 });
 
 reviewSchema.post(/^findOneAnd/, async function () {
   //await this.findOne(); dos not worked here , query already excuted
 
-  await this.r.constructor.calcAvarageRatings(this.r.tour);
+  await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
 const Review = mongoose.model('Review', reviewSchema);

@@ -6,40 +6,6 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-// const allUsers = (req,res)=> {
-//     res.status(500).json({
-//         status: 'error',
-//         message: 'this route is not yet defined'
-//     });
-// };
-// const User = (req,res)=> {
-//     res.status(500).json({
-//         status: 'error',
-//         message: 'this route is not yet defined'
-//     });
-// };
-// const createUser = (req,res)=> {
-//     res.status(500).json({
-//         status: 'error',
-//         message: 'this route is not yet defined'
-//     });
-// };
-
-// const updateUser = (req,res)=> {
-//     res.status(500).json({
-//         status: 'error',
-//         message: 'this route is not yet defined'
-//     });
-// };
-// const deleteUser = (req,res)=> {
-//     res.status(500).json({
-//         status: 'error',
-//         message: 'this route is not yet defined'
-//     });
-// };
-
-//const router = express.Router();
-
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);

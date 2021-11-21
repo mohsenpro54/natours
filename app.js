@@ -34,16 +34,20 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 ///// 1) GLOBAL MIDDLEWARE
 //// serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+//// set security http headers
+app.use(helmet());
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 //// impliment cors
 app.use(cors());
 
 app.options('*', cors());
 //app.options('/api/v1/tours/:id', cors());
 // app.use(helmet());
-
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 
 const limiter = rateLimit({
   max: 100,
@@ -53,10 +57,37 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
+
 app.use(mongoSanitize());
 
 app.use(xss());
 
+////access-controll-allow-origin*
+////api.natours.com,front-end natours.com
+// app.use(
+//   cors({
+//     origin: 'https://www.natours.com',
+//   })
+// );
+
+//// 1) global middelware
+
+///// limit requestes from same api
+
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
+/////// body parser, reading data from into req.body
+//app.use(morgan('dev'));
+
+//// data sanitization against nosql query injection
+
+//// data sanitization against xss
 app.use(
   hpp({
     whitelist: [
@@ -69,46 +100,14 @@ app.use(
     ],
   })
 );
-
-app.use(express.static(path.join(`${__dirname}/public`)));
-//// set security http headers
-app.use(helmet());
-////access-controll-allow-origin*
-////api.natours.com,front-end natours.com
-// app.use(
-//   cors({
-//     origin: 'https://www.natours.com',
-//   })
-// );
-
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  next();
-});
-//// 1) global middelware
-
-///// limit requestes from same api
-
-app.post(
-  '/webhook-checkout',
-  bodyParser.raw({ type: 'application/json' }),
-  bookingController.webhookCheckout
-);
-/////// body parser, reading data from into req.body
-//app.use(morgan('dev'));
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-app.use(cookieParser());
-
-//// data sanitization against nosql query injection
-
-//// data sanitization against xss
-
 ///// prevent parameter pollution
 
 app.use(compression());
 ///// testing middleware
-
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+  next();
+});
 //// 3) ROUTES
 
 app.use('/', viewRouter);
