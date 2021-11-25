@@ -163,19 +163,19 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-// tourSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'guides',
-//     select: '-__v-passwordCreatedAt',
-//   });
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v-passwordCreatedAt',
+  });
 
-//   next();
-// });
-
-tourSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} milliseconds`);
   next();
 });
+
+// tourSchema.post(/^find/, function (docs, next) {
+//   console.log(`Query took ${Date.now() - this.start} milliseconds`);
+//   next();
+// });
 
 //////AGGRIGATION MIDDLEWARE
 // tourSchema.pre('aggregate', function (next) {

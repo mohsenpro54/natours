@@ -1,6 +1,5 @@
 /*eslint-disable*/
 const crypto = require('crypto');
-//const util = require('util');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
@@ -153,7 +152,6 @@ exports.restrictTo = (...roles) => {
         new AppError('you do not have permission to perform this action', 403)
       );
     }
-
     next();
   };
 };

@@ -20,6 +20,7 @@ if (mapBox) {
   const locations = JSON.parse(document.mapBox.dataset.locations);
   displayMap(locations);
 }
+
 if (loginForm)
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ if (loginForm)
     login(email, password);
   });
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
+
 if (userDataForm)
   userDataForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -50,11 +52,13 @@ if (userPasswordForm)
       { passwordCurrent, password, passwordConfirm },
       'password'
     );
-    document.querySelector('.btn--save-password').textContent = 'Save Password';
+
+    document.querySelector('.btn--save-password').textContent = 'Save password';
     document.getElementById('password-current').value = '';
-    document.getElementById('password-password').value = '';
+    document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
   });
+
 if (bookBtn)
   bookBtn.addEventListener('click', (e) => {
     e.target.textContent = 'Processing...';

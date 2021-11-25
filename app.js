@@ -1,7 +1,7 @@
 /*eslint-disable*/
 //const fs= require('fs');
-const path = require('path');
 const express = require('express');
+const path = require('path');
 //const { json } = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -9,7 +9,6 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-//const { bodyParser } = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
@@ -33,6 +32,10 @@ app.set('view engine', 'pug');
 
 app.set('views', path.join(__dirname, 'views'));
 ///// 1) GLOBAL MIDDLEWARE
+//// impliment cors
+app.use(cors());
+
+app.options('*', cors());
 //// serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 //// set security http headers
@@ -42,10 +45,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-//// impliment cors
-app.use(cors());
-
-app.options('*', cors());
 //app.options('/api/v1/tours/:id', cors());
 // app.use(helmet());
 
@@ -57,6 +56,12 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
+
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
@@ -65,29 +70,6 @@ app.use(mongoSanitize());
 
 app.use(xss());
 
-////access-controll-allow-origin*
-////api.natours.com,front-end natours.com
-// app.use(
-//   cors({
-//     origin: 'https://www.natours.com',
-//   })
-// );
-
-//// 1) global middelware
-
-///// limit requestes from same api
-
-app.post(
-  '/webhook-checkout',
-  bodyParser.raw({ type: 'application/json' }),
-  bookingController.webhookCheckout
-);
-/////// body parser, reading data from into req.body
-//app.use(morgan('dev'));
-
-//// data sanitization against nosql query injection
-
-//// data sanitization against xss
 app.use(
   hpp({
     whitelist: [
@@ -117,7 +99,7 @@ app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
-  next(new AppError(`can't find ${req.originalUrl} on this server !`, 404));
+  next(new AppError(`can not find ${req.originalUrl} on this server !`, 404));
 });
 ////////////////// 4) start the server
 

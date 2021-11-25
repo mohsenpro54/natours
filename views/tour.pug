@@ -1,9 +1,9 @@
 extends base 
-//- include _reviewCard
+include _reviewCard
 
-//- block append head 
-//-   script(src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js')
-//-   link(href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' )
+block append head 
+  script(src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js')
+  link(href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' )
   
 mixin overviewBox(label, text, icon)
   .overview-box__detail
@@ -13,7 +13,6 @@ mixin overviewBox(label, text, icon)
     span.overview-box__text= text
 
 block content 
-
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
@@ -51,6 +50,7 @@ block content
           each guide in tour.guides
             .overview-box__detail
               img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide. name}`)
+              
               - if (guide.role === 'lead-guide')
                 span.overview-box__label Lead guide
               - if (guide.role === 'guide')
@@ -64,15 +64,7 @@ block content
         p.description__text= p
 
   section.section-pictures
-      each img, i in tour.images 
     each img, i in tour.images 
-      each img, i in tour.images 
-    each img, i in tour.images 
-      each img, i in tour.images 
-    each img, i in tour.images 
-      each img, i in tour.images 
-    each img, i in tour.images 
-      each img, i in tour.images 
       .picture-box
         img.picture-box__img(src=`/img/tours/${img}`, alt=`The Park Camper Tour ${i + 1}`,
         class=`picture-box__img--${i + 1}`)
@@ -80,10 +72,10 @@ block content
   section.section-map
     #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
-  //- section.section-reviews
-  //-   .reviews
-  //-     each review in tour.reviews
-  //-       +reviewCard(review)
+  section.section-reviews
+    .reviews
+      each review in tour.reviews
+        +reviewCard(review)
 
   section.section-cta
     .cta

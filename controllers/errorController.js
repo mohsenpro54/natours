@@ -52,12 +52,12 @@ const sendErrorProd = (err, req, res) => {
       ///// programming or other unknown error : don't leak error details
     }
     // 1) log error
-    console.error('ERROR :', err);
+    console.error('ERROR', err);
 
     /// 2) send generic message
     return res.status(500).json({
       status: 'error',
-      message: 'something went very wrong !',
+      message: 'something went very wrong!',
     });
   }
   if (err.isOperational) {
