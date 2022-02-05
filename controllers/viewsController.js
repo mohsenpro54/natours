@@ -1,9 +1,9 @@
 /*eslint-disable*/
-const Tour = require('../models/tourModel');
-const User = require('../models/userModel');
-const Booking = require('../models/bookingModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const Tour = require('../models/tourModel.js');
+const User = require('../models/userModel.js');
+const Booking = require('../models/bookingModel.js');
+const catchAsync = require('../utils/catchAsync.js');
+const AppError = require('../utils/appError.js');
 
 exports.alerts = (req, res, next) => {
   const { alert } = req.query;
@@ -43,7 +43,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
-    title: 'log into your account',
+    title: 'login to your account',
   });
 };
 exports.getAccount = (req, res) => {

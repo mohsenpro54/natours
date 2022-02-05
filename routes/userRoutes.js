@@ -1,8 +1,8 @@
 /*eslint-disable*/
 const express = require('express');
 
-const userController = require('./../controllers/userController');
-const authController = require('./../controllers/authController');
+const userController = require('./../controllers/userController.js');
+const authController = require('./../controllers/authController.js');
 
 const router = express.Router();
 

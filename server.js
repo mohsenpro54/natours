@@ -12,7 +12,7 @@ process.on('uncaughtException', (err) => {
 });
 
 dotenv.config({ path: './config.env' });
-const app = require('./app');
+const app = require('./app.js');
 //require("dotenv").config();
 //console.log(process.env);
 

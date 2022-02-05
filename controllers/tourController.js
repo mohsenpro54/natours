@@ -1,10 +1,10 @@
 /*eslint-disable*/
 const multer = require('multer');
 const sharp = require('sharp');
-const Tour = require('./../models/tourModel');
-const catchAsync = require('./../utils/catchAsync');
-const factory = require('./handlerFactory');
-const AppError = require('./../utils/appError');
+const Tour = require('./../models/tourModel.js');
+const catchAsync = require('./../utils/catchAsync.js');
+const factory = require('./handlerFactory.js');
+const AppError = require('./../utils/appError.js');
 
 const multerStorage = multer.memoryStorage();
 const multerFilter = (req, file, cb) => {
@@ -26,7 +26,7 @@ exports.uploadTourImages = upload.fields([
 //// upload.single image  req.file
 //// upload.array images  req.files
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  //console.log(req.files);
+  // console.log(req.files);
   if (!req.files.imageCover || !req.files.images) return next();
 
   /// 1) cover image
@@ -86,9 +86,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     {
       $sort: { avgPrice: 1 },
     },
-    // {
-    //     $match:{_id:{$ne:'EASY'}}
-    // }
   ]);
 
   res.status(200).json({

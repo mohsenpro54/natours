@@ -15,10 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
+    "cor-js": "^1.2.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -34,15 +34,17 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "nodemailer": "^6.6.3",
+    "parcel-bundler": "^1.12.5",
     "pug": "^3.0.2",
-    "sharp": "^0.29.1",
+    "sharp": "^0.30.0",
     "slugify": "^1.6.0",
-    "stripe": "^8.176.0",
+    "stripe": "^7.63.1",
     "typeof": "^1.0.0",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "@types/stripe": "^8.0.417",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -51,8 +53,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.24.0",
-    "ndb": "^1.1.5",
-    "parcel-bundler": "^1.9.4",
     "prettier": "2.3.2"
   },
   "engines": {

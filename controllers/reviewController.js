@@ -1,6 +1,6 @@
 /*eslint-disable*/
-const Review = require('./../models/reviewModel');
-const factory = require('./handlerFactory');
+const Review = require('./../models/reviewModel.js');
+const factory = require('./handlerFactory.js');
 // const catchAsync = require('./../utils/catchAsync');
 
 exports.setTourUserIds = (req, res, next) => {

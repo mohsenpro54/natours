@@ -1,6 +1,6 @@
 /*eslint-disable*/
 //const appError = require('./../utils/appError');
-const AppError = require('./../utils/appError');
+const AppError = require('./../utils/appError.js');
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}.`;
@@ -14,7 +14,7 @@ const handleDuplicateFieldsDB = (err) => {
   const message = `Duplicate field value :${value} .please use another valus !`;
   return new AppError(message, 400);
 };
-const handlerValidationErrorDB = (err) => {
+const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
   const message = `Invalide input data. ${errors.join('. ')}`;
   return new AppError(message, 400);
@@ -43,17 +43,16 @@ const sendErrorDev = (err, req, res) => {
 };
 const sendErrorProd = (err, req, res) => {
   if (req.originalUrl.startsWith('/api')) {
+    ///// operational, trusted : send message to the client
     if (err.isOperational) {
-      ///// operational, trusted : send message to the client
       return res.status(err.statusCode).json({
         status: err.status,
         message: err.message,
       });
-      ///// programming or other unknown error : don't leak error details
     }
+    ///// programming or other unknown error : don't leak error details
     // 1) log error
     console.error('ERROR', err);
-
     /// 2) send generic message
     return res.status(500).json({
       status: 'error',
@@ -71,7 +70,6 @@ const sendErrorProd = (err, req, res) => {
   }
   // 1) log error
   console.error('ERROR', err);
-
   /// 2) send generic message
   return res.status(err.statusCode).render('error', {
     title: 'something went wrrong',
@@ -93,7 +91,7 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === 'ValidationError')
-      error = handlerValidationErrorDB(error);
+      error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 

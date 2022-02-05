@@ -5,22 +5,22 @@ main.main
         li.side-nav--active
           a(href='#')
             svg
-              use(xlink:href='img/icons.svg#icon-settings')
+              use(xlink:href='/img/icons.svg#icon-settings')
             | Settings
         li
           a(href='#')
             svg
-              use(xlink:href='img/icons.svg#icon-briefcase')
+              use(xlink:href='/img/icons.svg#icon-briefcase')
             | My bookings
         li
           a(href='#')
             svg
-              use(xlink:href='img/icons.svg#icon-star')
+              use(xlink:href='/img/icons.svg#icon-star')
             | My reviews
         li
           a(href='#')
             svg
-              use(xlink:href='img/icons.svg#icon-credit-card')
+              use(xlink:href='/img/icons.svg#icon-credit-card')
             | Billing
       .admin-nav
         h5.admin-nav__heading Admin
@@ -28,22 +28,22 @@ main.main
           li
             a(href='#')
               svg
-                use(xlink:href='img/icons.svg#icon-map')
+                use(xlink:href='/img/icons.svg#icon-map')
               | Manage tours
           li
             a(href='#')
               svg
-                use(xlink:href='img/icons.svg#icon-users')
+                use(xlink:href='/img/icons.svg#icon-users')
               | Manage users
           li
             a(href='#')
               svg
-                use(xlink:href='img/icons.svg#icon-star')
+                use(xlink:href='/img/icons.svg#icon-star')
               | Manage reviews
           li
             a(href='#')
               svg
-                use(xlink:href='img/icons.svg#icon-briefcase')
+                use(xlink:href='/img/icons.svg#icon-briefcase')
 
     .user-view__content
       .user-view__form-container
@@ -56,7 +56,7 @@ main.main
             label.form__label(for='email') Email address
             input#email.form__input(type='email', value='admin@natours.io', required)
           .form__group.form__photo-upload
-            img.form__user-photo(src='img/user.jpg', alt='User photo')
+            img.form__user-photo(src='/img/user.jpg', alt='User photo')
             a.btn-text(href='') Choose new photo
           .form__group.right
             button.btn.btn--small.btn--green Save settings

@@ -1,7 +1,7 @@
 /*eslint-disable*/
 ///// review  rating  createdat ref to tour   ref to user
 const mongoose = require('mongoose');
-const Tour = require('./tourModel');
+const Tour = require('./tourModel.js');
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -81,7 +81,7 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
   }
 };
 
-reviewSchema.post('save', function () {
+reviewSchema.pre('save', function () {
   //// this point to current review
   this.constructor.calcAverageRatings(this.tour);
 });

@@ -1,10 +1,10 @@
 /*eslint-disable*/
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const Tour = require('../models/tourModel');
-const User = require('../models/userModel');
-const Booking = require('../models/bookingModel');
-const catchAsync = require('../utils/catchAsync');
-const factory = require('./handlerFactory');
+const Tour = require('../models/tourModel.js');
+const User = require('../models/userModel.js');
+const Booking = require('../models/bookingModel.js');
+const catchAsync = require('../utils/catchAsync.js');
+const factory = require('./handlerFactory.js');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //// 1) get the currently booked tour
@@ -21,7 +21,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     client_reference_id: req.params.tourId,
     line_items: [
       {
-        name: `${tour.name}Tour`,
+        name: `${tour.name} Tour`,
         description: tour.summary,
         images: [
           `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`,

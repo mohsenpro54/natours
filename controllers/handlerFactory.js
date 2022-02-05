@@ -1,8 +1,8 @@
 /*eslint-disable*/
 const { model } = require('mongoose');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
-const APIFeatures = require('./../utils/apiFeatures');
+const catchAsync = require('./../utils/catchAsync.js');
+const AppError = require('./../utils/appError.js');
+const APIFeatures = require('./../utils/apiFeatures.js');
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {

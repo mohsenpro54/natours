@@ -3,9 +3,9 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const Tour = require('./../../models/tourModel');
-const Review = require('./../../models/reviewModel');
-const User = require('./../../models/userModel');
+const Tour = require('./../../models/tourModel.js');
+const Review = require('./../../models/reviewModel.js');
+const User = require('./../../models/userModel.js');
 
 dotenv.config({ path: './config.env' });
 const DB = process.env.DATABASE.replace(
@@ -32,9 +32,9 @@ const reviews = JSON.parse(
 // import data into to db
 const importData = async () => {
   try {
-    await Tour.create(tours);
+    await Tour.create(tours, { validateBeforeSave: false });
     await User.create(users, { validateBeforeSave: false });
-    await Review.create(reviews);
+    await Review.create(reviews, { validateBeforeSave: false });
     console.log('data sucessfully loaded');
   } catch (err) {
     console.log(err);
